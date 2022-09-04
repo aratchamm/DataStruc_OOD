@@ -1,3 +1,19 @@
+# ให้เขียน class calculator  ที่มีการทำงานผ่านฟังก์ชัน run(instructions) โดยมี instructions ดังนี้
+# +: Pop 2 ค่าออกจาก stack, นำมาบวกกัน และ push ผลลัพธ์ลง stack
+# -: Pop 2 ค่าออกจาก stack, นำค่าที่อยู่ข้างบนลบด้วยค่าที่อยู่ข้างล่าง และ push ผลลัพธ์ลง stack
+# *: Pop 2 ค่าออกจาก stack, นำมาคูณกัน และ push ผลลัพธ์ลง stack
+# /: Pop 2 ค่าออกจาก stack, นำค่าที่อยู่ข้างบนหารด้วยค่าที่อยู่ข้างล่าง และ push ผลลัพธ์ลง stack
+# DUP: Duplicate (not double) ค่าบนสุดของ stack
+# POP: Pop ค่าบนสุดออกจาก stack และ discard.
+# PSH: ทำการ push ตัวเลขลง stack
+# หมายเหตุ คำสั่งอื่น ๆ (เช่นตัวอักษร) ควรทำให้เกิดค่า "Invalid instruction: [instruction]"
+# *************************************************
+# print("* Stack Calculator *")
+# arg = input("Enter arguments : ")
+# machine = StackCalc()
+# machine.run(arg)
+# print(machine.getValue())
+
 import sys
 class Stack():
     def __init__(self):
