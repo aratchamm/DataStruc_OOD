@@ -15,24 +15,25 @@
 # print(machine.getValue())
 
 import sys
+
 class Stack():
     def __init__(self):
-        self.stack = []
-    def push(self, item):
-        return self.stack.append(item)
+        self.items = []
     def pop(self):
         if self.isEmpty(): return None
-        return self.stack.pop()
-    def peek(self):
-        if self.isEmpty(): return None
-        return self.stack[-1]
-    def size(self):
-        return len(self.stack)
+        return self.items.pop()
+    def push(self,i):
+        return self.items.append(i)
     def isEmpty(self):
-        return len(self.stack) == 0
+        return len(self.items)==0
+    def size(self):
+        return len(self.items)
+    def peek(self):
+        if s.isEmpty(): return None
+        return self.items[-1]
 
+instruction = ['+','-','*','/','DUP','POP','PSH']
 s = Stack()
-instructions = ['+','-','*','/','DUP','POP','PSH']
 
 class StackCalc(Stack):
     def __init__(self):
@@ -43,7 +44,7 @@ class StackCalc(Stack):
     def minus(self):
         s.push(s.pop() - s.pop())
     def divide(self):
-        s.push(s.pop() / s.pop())
+        s.push(int(s.pop() / s.pop()))
     def mul(self):
         s.push(s.pop() * s.pop())
     def dup(self):
@@ -55,37 +56,38 @@ class StackCalc(Stack):
         if valu == None: return 0
         return valu
 
-    
+
     def run(self,arg):
-        for arg in arg.split():
-            if arg.isnumeric():
-                s.push(int(arg))
-            elif arg in instructions :
-                if s.size() > 1:
-                    if arg == '+':
+        arg = arg.split()
+        for i in arg:
+            if i.isnumeric():
+                s.push(int(i))
+            elif i in instruction:
+                if s.size()>1:
+                    if i=='+':
                         self.plus()
-                    elif arg == '-':
+                    elif i=='-':
                         self.minus()
-                    elif arg == '*':
+                    elif i=='*':
                         self.mul()
-                    elif arg == '/':
+                    elif i=='/':
                         self.divide()
 
-                if s.size() > 0:
-                    if arg == 'DUP':
+                if s.size() > 0 :
+                    if i=='DUP':
                         self.dup()
-                    elif arg == 'POP':
+                    elif i=='POP':
                         self.pop()
-                    elif arg == 'PSH':
-                        pass
+                    elif i=='PSH':
+                        self.Psh()
+                    
             else:
-                print(f"Invalid instruction: {arg}")
+                print(f"Invalid instruction: {i}")
                 sys.exit()
-                
-                
+            
 
 print("* Stack Calculator *")
 arg = input("Enter arguments : ")
 machine = StackCalc()
-output = machine.run(arg)
+machine.run(arg)
 print(machine.getValue())

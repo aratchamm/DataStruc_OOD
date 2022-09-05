@@ -30,51 +30,39 @@
 
 
 
-
-class Stack:
-
+class Stack():
     def __init__(self):
         self.items = []
-
-    def push(self, i):
-        return self.items.append(i)
-
-    def pop(self):
-        self.items.pop()
-
     def size(self):
         return len(self.items)
-
     def isEmpty(self):
         return len(self.items) == 0
-
-    def peek(self):
-        return self.items[-1]
+    def pop(self):
+        if self.isEmpty(): return None
+        return self.items.pop()
+    def push(self,value):
+        return self.items.append(value)
 
 
 inp = input('Enter Input : ').split()
-inp = inp[::-1]
-x=0
+inp.reverse()
 S = Stack()
+x=0
 
-for ele in inp:
+for i in inp:
     if S.size() < 2:
-        S.push(ele)
+        S.push(i)
     else:
-        if S.items[-2] == S.peek() and S.peek() == ele:
+        if S.items[-1] == S.items[-2] and S.items[-1] == i:
             S.pop()
             S.pop()
             x+=1
-        else:  
-            S.push(ele)
+        else:
+            S.push(i)
 
 print(S.size())
-for i in range(len(S.items)):
-    print(S.items[i], end="")
+for i in S.items:
+    print(i,end="")
+    if x>=2:
+        print(f"Combo : {x}!!!")
     
-if S.isEmpty():
-    print("Empty")
-else:
-    print()
-if(x>1):
-    print(f"Combo : {x} ! ! !")
