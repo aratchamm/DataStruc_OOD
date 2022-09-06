@@ -19,72 +19,72 @@ import sys
 class Stack():
     def __init__(self):
         self.items = []
+    def size(self):
+        return len(self.items)
+    def isEmpty(self):
+        return len(self.items) == 0
+    def push(self,i):
+        return self.items.append(i)
     def pop(self):
         if self.isEmpty(): return None
         return self.items.pop()
-    def push(self,i):
-        return self.items.append(i)
-    def isEmpty(self):
-        return len(self.items)==0
-    def size(self):
-        return len(self.items)
     def peek(self):
-        if s.isEmpty(): return None
+        if self.isEmpty(): return None
         return self.items[-1]
 
-instruction = ['+','-','*','/','DUP','POP','PSH']
 s = Stack()
+instructions = ['+','-','*','/','PSH','POP','DUP']
 
-class StackCalc(Stack):
+class StackCalc():
+
     def __init__(self):
         super().__init__()
 
     def plus(self):
         s.push(s.pop() + s.pop())
-    def minus(self):
+    def min(self):
         s.push(s.pop() - s.pop())
-    def divide(self):
-        s.push(int(s.pop() / s.pop()))
     def mul(self):
         s.push(s.pop() * s.pop())
-    def dup(self):
+    def div(self):
+        s.push(int(s.pop() / s.pop()))
+    def dulpicate(self):
         s.push(s.peek())
-    def pop(self):
-        s.pop()
-    def getValue(self):
-        valu = s.peek()
-        if valu == None: return 0
-        return valu
-
 
     def run(self,arg):
-        arg = arg.split()
-        for i in arg:
-            if i.isnumeric():
-                s.push(int(i))
-            elif i in instruction:
-                if s.size()>1:
-                    if i=='+':
-                        self.plus()
-                    elif i=='-':
-                        self.minus()
-                    elif i=='*':
-                        self.mul()
-                    elif i=='/':
-                        self.divide()
-
-                if s.size() > 0 :
-                    if i=='DUP':
-                        self.dup()
-                    elif i=='POP':
-                        self.pop()
-                    elif i=='PSH':
-                        self.Psh()
-                    
+        for ele in arg.split():
+            if ele.isnumeric():
+                s.push(int(ele))
             else:
-                print(f"Invalid instruction: {i}")
-                sys.exit()
-            
+                if ele in instructions:
+                    if not s.isEmpty() :
+                        if ele == 'DUP':
+                            self.dulpicate()
+                        elif ele == 'POP':
+                            s.pop()
+                        elif ele == 'PSH':
+                            s.push(ele)
+
+                    if s.size() >=2:
+                        if ele == '+':
+                            self.plus()
+                        elif ele == '-':
+                            self.min()
+                        elif ele == '*':
+                            self.mul()
+                        elif ele == '/':
+                            self.div()
+                else:
+                    print(f"Invalid instruction: {ele}")
+                    sys.exit()
+
+    def getValue(self):
+        if s.peek() != None: 
+            valu = s.peek()
+            return valu
+        else: return 0
+
+
 
 print("* Stack Calculator *")
 arg = input("Enter arguments : ")
