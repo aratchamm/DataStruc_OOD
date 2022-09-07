@@ -24,7 +24,7 @@ class Queue():
         return len(self.stack) == 0
     def peek(self):
         return self.stack[0]
-
+    
 q = Queue()
 q2 = Queue()
 inp = input("Enter Input : ").split(",")

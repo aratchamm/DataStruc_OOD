@@ -42,6 +42,11 @@ class Stack():
         return self.items.pop()
     def push(self,value):
         return self.items.append(value)
+    def __str__(self):
+        s = ''
+        for i in self.items:
+            s += str(i) + ''
+        return s
 
 
 inp = input('Enter Input : ').split()
@@ -50,10 +55,10 @@ S = Stack()
 x=0
 
 for i in inp:
-    if S.size() < 2:
+    if S.size() < 2 or S.isEmpty():
         S.push(i)
     else:
-        if S.items[-1] == S.items[-2] and S.items[-1] == i:
+        if S.items[-1] == S.items[-2] == i:
             S.pop()
             S.pop()
             x+=1
@@ -61,8 +66,9 @@ for i in inp:
             S.push(i)
 
 print(S.size())
-for i in S.items:
-    print(i,end="")
-    if x>=2:
-        print(f"Combo : {x}!!!")
-    
+if (S.size()>0):
+    print(S)
+else:
+    print("Empty")
+if x>=2:
+    print(f"Combo : {x}!!!")

@@ -14,6 +14,11 @@ class Stack:
         return len(self.items) == 0
     def push(self,i):
         return self.items.append(i)
+    def __str__(self):
+        s = ''
+        for i in self.items:
+            s += str(i) + ' '
+        return s
 
 S = Stack()
 
