@@ -1,65 +1,57 @@
-# จงเขียนโปรแกรมเพื่อตรวจสอบว่า นิพจน์มีวงเล็บครบถ้วนหรือไม่ โดยใช้ Stack ช่วยในการแก้ปัญหา
-
-# โดยสามารถแจ้งได้ว่าข้อผิดพลาดที่เกิดขึ้นเกิดจากสาเหตุใด
-
-# 1. มี วงเปิดไม่ตรงชนิดกับวงเล็บปิด
-
-# 2. วงเล็บปิดเกิน
-
-# 3. วงเล็บเปิดเกิน
-
-# แล้วให้แสดงผลตามตัวอย่าง
-
 class Stack():
     def __init__(self):
         self.items = []
     def size(self):
-        return len(self.items)
+        return len(self.items) 
     def isEmpty(self):
         return len(self.items) == 0
-    def push(self, i):
-        return self.items.append(i)
     def pop(self):
-        self.items.pop()
+        return self.items.pop()
+    def push(self,i):
+        return self.items.append(i)
     def peek(self):
-        if self.isEmpty(): return None
         return self.items[-1]
+    def bottom(self):
+        return self.items[0]
+    def __str__(self):
+        s = ''
+        for i in self.items:
+            s = i + ''
+        return s
 
 s = Stack()
 
-open = ['(','{','[']
-close = [')',']','}']
-p=0
+open=['(','{','[']
+close=[')','}',']']
+x = 0
 
-x = input("Enter expresion : ")
-for char in x:
+inp = input("Enter expresion : ")
+
+for char in inp:
     if char in open:
         s.push(char)
-        p=0
     else:
         if not s.isEmpty():
-            if s.peek() == '{' and char == '}':
-                s.pop()
-            elif s.peek() == '[' and char == ']':
-                s.pop()
-            elif s.peek() == '(' and char == ')':
-                s.pop()
-            elif char in close and char != s.peek():
-                p='U'
+            if char in close:
+                if s.peek() == '(' and char == ')' or \
+                 s.peek() == '{' and char == '}' or \
+                 s.peek() == '[' and char == ']':
+                    # match
+                    s.pop()
+                else:
+                    # unmatch
+                    x = 'U'
+                    print(f"{inp} Unmatch open-close")
+                    exit(0)
         else:
-            p='C'
-        
+            x = 'C'
 
-if not s.isEmpty() and p==0:
-    p='O'
+if not s.isEmpty():
+    # open paren
+    x = 'O'
 
-if p=='U':
-    print(f"{x} Unmatch open-close")
-elif p=='C':
-    print(f"{x} close paren excess")
-elif p=='O':
-    print(f"{x} open paren excess {s.size()} : ",end='')
-    for i in range(len(s.items)):
-        print(s.items[i], end="")
-elif p==0:
-    print(f"{x} MATCH")
+if x == 0: print(f"{inp} MATCH")  
+if x == 'C': print(f"{inp} close paren excess")  
+if x == 'O': print(f"{inp} open paren excess   {s.size()} : {s}")  
+
+    
