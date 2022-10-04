@@ -1,3 +1,9 @@
+'''
+****** ห้ามใช้ For , While  ( ให้ฝึกเอาไว้ เนื่องจากถ้าเจอตอนสอบจะได้ 0 )
+
+ให้เขียน Recursive หาค่า Min ของ Input
+'''
+
 def Findmin(l):
     if (len(l) == 1):
         return l[0]

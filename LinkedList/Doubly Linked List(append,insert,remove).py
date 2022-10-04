@@ -45,14 +45,14 @@ class DoublyLinkedList:
         return self.size
 
     def __str__(self):
-        s=''
-        p = self.head
-        while p != None :
-            if p!=self.tail:
-                s += str(p.data) + '->'
+        s=""
+        cur=self.head
+        while cur!=None:
+            if cur != self.tail:
+                s += str(cur.data) + '->'
             else:
-                s += str(p.data)
-            p = p.next
+                s += str(cur.data)
+            cur = cur.next
         return s
 
     def str_reverse(self):
@@ -87,11 +87,11 @@ class DoublyLinkedList:
         i=0
         temp = Node(data)
         p=self.head
-        if index==0:
-            if(self.isEmpty()):
+        if(self.isEmpty()):
                 self.head=temp
                 self.tail=temp
-            else:
+
+        elif index==0:
                 self.head.prev=temp
                 temp.next=self.head
                 self.head=temp
@@ -113,7 +113,7 @@ class DoublyLinkedList:
     def remove(self,data):
         p=self.head
         i=0
-        while p != None:
+        if not self.isEmpty():
             if p.data == data:
                 if p != self.head and p != self.tail:
                     p.prev.next=p.next
