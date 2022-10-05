@@ -1,6 +1,3 @@
-from shutil import register_unpack_format
-
-
 def fac(num):
     if num==1:
         return num
