@@ -5,14 +5,7 @@
 '''
 
 def FindPower(a,b):
-    if a>=0 and b>=0:
-        if b==1:
-            return a
-        elif b==0:
-            return 1
-        else:
-            b -=1
-            return a * FindPower(a,b)
+    return a**b
 
 inp = input("Enter Input a b : ").split()
 a = int(inp[0])

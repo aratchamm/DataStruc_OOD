@@ -1,7 +1,3 @@
-from imp import new_module
-from platform import node
-from tkinter import N
-
 
 class Node:
     def __init__(self, value):
@@ -90,13 +86,53 @@ class LinkedList:
 
 
     def index(self, item):
-        #Code Here
+        s=self.head
+        idx = 0
+        while s != None:
+            if s.data == item:
+                return idx
+            s = s.next
+            idx += 1
+        # ถ้าหาไม่เจอ
+        return -1
 
     def size(self):
-        #Code Here
+        s = self.head
+        si = 0
+        while s != None:
+            s = s.next
+            si += 1
+        return si
 
     def pop(self, pos):
-        #Code Here
+        if pos == 0:
+            if self.isEmpty():
+                self.head = None
+                self.tail = None
+            else:
+                cur = self.head
+                cur.next.previous = None
+                self.head = self.head.next
+                cur.next = None
+        elif pos == self.size-1:
+            cur = self.tail
+            self.tail = self.tail.previous
+            cur.previous = None
+            self.tail.next = None
+        else:
+            cur = self.head
+            cur_idx = 0
+            while cur_idx < pos-1:
+                cur = cur.next
+                cur_idx += 1
+            curNext = cur.next
+            cur.next = curNext.next
+            cur.next.previous = cur
+            curNext.next = None
+            curNext.previous = None
+        self.size-=1
+
+
 
 L = LinkedList()
 inp = input('Enter Input : ').split(',')

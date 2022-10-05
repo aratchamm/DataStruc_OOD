@@ -1,174 +1,105 @@
 
-'''
-ให้เขียนคลาสของ Doubly Linked List ซึ่งมีเมท็อดดังนี้
-
-1. def __init__(self): สำหรับสร้าง linked list
-
-2. def __str__(self): return string แสดง ค่าใน linked list
-
-3. def str_reverse(self): return string แสดง ค่าใน linked list จากหลังมาหน้า
-
-4. def isEmpty(self): return list นั้นว่างหรือไม่
-
-5. def append(self, data): add node ที่มี data เป็น parameter ข้างท้าย linked list
-
-6. def insert(self, index, data): insert data ใน index ที่กำหนด
-
-7. def remove(self, data): remove & return node ที่มี data
-
- - การแทรกในที่นี้ จะเป็นการนำข้อมูลใหม่ที่ต้องการมาใส่แทนที่ตำแหน่งของข้อมูลเดิมและย้ายข้อมูลเดิมไปต่อหลังข้อมูลใหม่ 
-
-คำแนะนำเพิ่มเติม เพื่อความง่ายในการเขียนโค้ดและไม่ต้องเขียนspecial caseเยอะๆ ให้ลองใช้ Dummy Node ดูนะครับ(หากสงสัยการใช้งาน Dummy Node สอบถามพี่ๆTA หรือ https://youtu.be/XgUIjTQ1HjA )
-
-โดยรูปแบบ Input มีดังนี้
-1. append       ->  A
-2. add_before -> Ab
-3. insert          ->   I
-4. remove       ->  R
-'''
+from tkinter.messagebox import NO
 
 
-
-class Node:
-    def __init__(self, data):
-        self.data = data
+class Node():
+    def __init__(self,data):
         self.next = None
-        self.prev = None
+        self.data = data
 
-class DoublyLinkedList:     
+class DoublyLinkedList():
     def __init__(self):
-        self.head=None
-        self.tail=None
-        self.size=0
-
-    def __len__(self):
-        return self.size
+        self.head = None
+        self.tail = None
+        self.size = 0
 
     def __str__(self):
-        s=""
-        cur=self.head
-        while cur!=None:
-            if cur != self.tail:
-                s += str(cur.data) + '->'
+        s = ''
+        cur = self.head
+        while cur != None:
+            if cur!= self.tail:
+                s += str(self.data) + "->"
             else:
-                s += str(cur.data)
+                s += str(self.data)
             cur = cur.next
         return s
-
     def str_reverse(self):
-        s=''
-        p=self.tail
-        while p != None :
-            if p!=self.head:
-                s += str(p.data) + '->'
+        s = ''
+        cur = self.tail
+        while cur != None:
+            if cur != self.head:
+                s += str(self.data) + "->"
             else:
-                s += str(p.data)
-            p = p.prev
+                s += str(self.data)
+
+            cur = cur.prev
+
         return s
-
-    def isEmpty(self):
-        if self.size == 0 :
-            return True
+    def isEmpthy(self):
+        return self.size == 0
+    def append(self,data):
+        newNode = Node(data)
+        if self.isEmpthy():
+            self.head = newNode
+            self.tail = newNode
         else:
-            return False
-
-    def append(self, data):
-        temp = Node(data)
-        if self.head == None:
-            self.head = temp
-            self.tail = temp
+            self.tail.next = newNode
+            newNode.prev = self.tail
+            self.tail = newNode
+        self.size += 1
+    def insert(self,pos,data):
+        newNode = Node(data)
+        if pos == 0:
+            if self.isEmpthy():
+                self.head = newNode
+                self.tail = newNode
+            else:
+                self.head.prev = newNode
+                newNode.next = self.head
+                self.head = newNode
+        elif pos == self.size -1:
+            self.tail.next = newNode
+            newNode.prev = self.tail
+            self.tail = newNode
         else:
-            self.tail.next=temp
-            temp.prev=self.tail
-            self.tail=self.tail.next
-        self.size+=1
-
-    def insert(self, index, data):
-        i=0
-        temp = Node(data)
-        p=self.head
-        if(self.isEmpty()):
-                self.head=temp
-                self.tail=temp
-
-        elif index==0:
-                self.head.prev=temp
-                temp.next=self.head
-                self.head=temp
-                
-        elif index==len(self):
-            self.append(data)
-        else:
-            while i != index:
-                if i==index-1:
-                    temp.prev=p
-                    temp.next=p.next
-                    p.next.prev=temp
-                    p.next=temp
-                else:
-                    p=p.next
-                i+=1
-        self.size+=1
-
+            cur_idx = 0
+            cur = self.head
+            while cur_idx < pos-1:
+                cur_idx += 1
+                cur = cur.next
+            curNext = cur.next
+            curNext.next.prev = cur 
+            cur.next = curNext.next
+            curNext.prev = None
+            curNext.next = None
+        self.size -= 1
+    
     def remove(self,data):
-        p=self.head
-        i=0
-        if not self.isEmpty():
-            if p.data == data:
-                if p != self.head and p != self.tail:
-                    p.prev.next=p.next
-                    p.next.prev=p.prev
-                    p.prev=None
-                    p.next=None
-                elif p==self.head and self.head != self.tail:
-                    p.next.prev=None
-                    self.head=p.next
-                    p.next=None
-                elif p==self.tail and self.head != self.tail:
-                    p.prev.next=None
-                    self.tail=p.prev
-                    p.prev=None
-                else :
-                    self.head=None
-                    self.tail=None
-                self.size-=1
-                return [p,i]
-            p=p.next
-            i+=1
+        cur = self.head
+        cur_idx = 0
+        while cur != None:
+                if cur.data == data:
+                    if cur != self.head and cur != self.tail:
+                        cur.prev.next = cur.next
+                        cur.next.prev = cur.prev
+                        cur.next = None
+                        cur.prev = None
+                    elif cur == self.head and self.head != self.tail:
+                        cur.next.prev = None
+                        self.head = cur.next
+                        cur.next = None
+                    elif cur == self.tail and self.tail != self.head:
+                        self.tail = cur.next
+                        cur.prev.next = None
+                        cur.prev = None
+                    else:
+                        self.head = None
+                        self.tail = None
+                    self.size -= 1
+                    return [cur,cur_idx]
+
+                cur = cur.next
+                cur_idx += 1
+
         return [None]
 
-inp = input('Enter Input : ')
-inp=inp.replace(', ',',').split(',')
-DL=DoublyLinkedList()
-
-for i in inp:
-    i = i.split()
-    if i[0] == 'A':
-        DL.append(i[1])
-        print(f"linked list : {DL}")
-        print(f"reverse : {DL.str_reverse()}")
-    elif i[0] == 'Ab':
-        DL.insert(0, i[1])
-        print(f"linked list : {DL}")
-        print(f"reverse : {DL.str_reverse()}")
-    elif i[0] == 'I':
-        ele = i[1].split(':')
-        if int(ele[0])<0 or int(ele[0])>DL.size:
-            print("Data cannot be added")
-        else:
-            DL.insert(int(ele[0]), ele[1])
-            print(f"index = {ele[0]} and data = {ele[1]}")
-        print(f"linked list : {DL}")
-        print(f"reverse : {DL.str_reverse()}")   
-    elif i[0] == 'R':
-        # a คือ node ตัวที่เอาออกไป ข้างในมีตน+index 
-        # a[0] = ตำแหน่งที่เก็บ + a[0].data = ตัวเลข , a[1] = index 
-
-        # ไปหาเลขใน DL อีกทีนึง
-        a = DL.remove(i[1])
-        if a[0] == None:
-             print("Not Found!")
-        else:
-            print(f"removed : {a[0].data} from index : {a[1]}")
-        print(f"linked list : {DL}")
-        print(f"reverse : {DL.str_reverse()}")  
