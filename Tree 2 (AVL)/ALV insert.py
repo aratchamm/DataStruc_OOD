@@ -1,8 +1,6 @@
 '''
-ให้น้องๆสร้าง AVL Tree ด้วย Class โดยผลลัพธ์ให้แสดงเป็น Tree ในแต่ละรอบหลังจาก Insert ให้ตรวจสอบว่า balance หรือยัง หากไม่ให้ ปรับ Balance ให้เรียบร้อยแล้วและแสดงผล
-
+ให้น้องๆ สร้าง AVL Tree ด้วย Class โดยผลลัพธ์ให้แสดงเป็น Tree ในแต่ละรอบหลังจาก Insert ให้ตรวจสอบว่า balance หรือยัง หากไม่ให้ ปรับ Balance ให้เรียบร้อยแล้วและแสดงผล
 ** ถ้าสงสัยสามารถดู visualization ของ AVL ได้ที่ website นี้ : https://www.cs.usfca.edu/~galles/visualization/AVLtree.html
-
 #code เป็นเพียงตัวอย่างเท่านั้นสามารถเขียนขึ้นเองโดยไม่ต้องอ้างอิงจาก code นี้ก็ได้
 '''
 
@@ -25,14 +23,14 @@ class AVL:
             self.printTree(node.left, level + 1)
 
     def insert(self, root, data):
-        if root is None:
-            return Node(data)
+        if root == None:
+            root = Node(data)
         elif data < root.data:
             root.left = self.insert(root.left, data)
         else:
             root.right = self.insert(root.right, data)
-
-        root.height = 1 + max(self.getHeight(root.right), self.getHeight(root.left))
+    
+        root.height = max(self.getHeight(root.right), self.getHeight(root.left)) + 1
         balance = self.getBalance(root)
 
         # Left Left 
@@ -81,7 +79,7 @@ class AVL:
             return 0
         return root.height 
 
-    def getBalance(self, root): 
+    def getBalance(self, root):
         if not root: 
             return 0
         return self.getHeight(root.left) - self.getHeight(root.right) 
@@ -92,6 +90,6 @@ Tree = AVL()
 root = None
 for x in inp:
     print("insert :", x )
-    root = Tree.insert(root, x)
+    root = Tree.insert(root,x)
     Tree.printTree(root)
     print('===============')

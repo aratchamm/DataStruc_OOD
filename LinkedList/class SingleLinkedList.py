@@ -3,7 +3,7 @@ class Node:
         self.next = None
         self.data = data
 
-class SingleLinkedList:
+class LinkedList:
     def __init__(self):
         self.head = None
         self.size = 0
@@ -34,21 +34,21 @@ class SingleLinkedList:
 
     def insert(self, index, data): 
         newNode = Node(data)
-        cur = self.head
-        if self.isEmpty(): 
+        
+        if self.isEmpty():
             self.head = newNode
         elif index == 0:
             newNode.next = self.head
             self.head = newNode
         else:
+            cur = self.head
             cur_idx = 0
-            while cur_idx < (index-1):
+            while cur_idx < index-1:
+                cur_idx+=1
                 cur = cur.next
-                cur_idx += 1
-            newNode.next = cur.next
+            newNode = cur.next
             cur.next = newNode
-            
-        self.size += 1
+        self.size +=1
 
     def remove(self,index):
         if not self.isEmpty():
